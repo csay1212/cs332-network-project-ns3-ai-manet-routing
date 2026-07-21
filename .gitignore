@@ -8,6 +8,7 @@
 !ns-3.48/scratch/manet100.csv
 *.mob
 *.log
+InstallationLog.txt
 *.tr
 *.pcap
 
