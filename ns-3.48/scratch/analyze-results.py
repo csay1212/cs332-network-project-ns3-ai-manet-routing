@@ -60,17 +60,17 @@ def pdr_baseline(rows, pps=4, sim_time=200, n_sinks=10, warmup=100):
     return (total_rx / total_tx) if total_tx > 0 else 0.0
 
 
-def pdr_ai(rows):
-    """PDR from AI CSV using PktsSent column (estimated at source)."""
+def pdr_ai(rows, pps=4, sim_time=200, n_sinks=10, warmup=100):
+    """PDR for AI simulation."""
     if not rows:
         return 0.0
     if "PktsRcvd" in rows[0]:
         total_rx = sum(int(r["PktsRcvd"]) for r in rows if r.get("PktsRcvd"))
-        total_tx_vals = [int(r["PktsSent"]) for r in rows if r.get("PktsSent") and int(r["PktsSent"]) > 0]
-        total_tx = max(total_tx_vals) if total_tx_vals else 0
+        active_secs = sim_time - warmup
+        total_tx = pps * active_secs * n_sinks
         return (total_rx / total_tx) if total_tx > 0 else 0.0
     elif "PacketsReceived" in rows[0]:
-        return pdr_baseline(rows)
+        return pdr_baseline(rows, pps=pps, sim_time=sim_time, n_sinks=n_sinks, warmup=warmup)
     return 0.0
 
 

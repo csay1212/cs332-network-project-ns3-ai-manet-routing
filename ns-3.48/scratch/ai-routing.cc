@@ -1,4 +1,4 @@
-﻿/*
+/*
  * ai-routing.cc  --  AI-Enhanced MANET Routing for NS-3.48
  *
  * VERIFIED API STATUS (inspected actual NS-3.48 headers)
@@ -69,15 +69,15 @@ NS_LOG_COMPONENT_DEFINE ("AiManetRouting");
  * TimestampTag: embeds packet send-time for E2E delay measurement.
  * The Tag API is public and confirmed unchanged in NS-3.48.
  * ========================================================================== */
-class TimestampTag : public Tag
+class AiTimestampTag : public Tag
 {
 public:
   static TypeId GetTypeId ()
   {
-    static TypeId tid = TypeId ("ns3::AiManet::TimestampTag")
+    static TypeId tid = TypeId ("ns3::AiManet::AiTimestampTag")
       .SetParent<Tag> ()
       .SetGroupName ("Applications")
-      .AddConstructor<TimestampTag> ();
+      .AddConstructor<AiTimestampTag> ();
     return tid;
   }
   TypeId   GetInstanceTypeId () const override { return GetTypeId (); }
@@ -94,7 +94,7 @@ private:
   uint64_t m_ns{0};
 };
 
-NS_OBJECT_ENSURE_REGISTERED (TimestampTag);
+NS_OBJECT_ENSURE_REGISTERED (AiTimestampTag);
 
 /* ==========================================================================
  * RouteScore: per-destination path quality state maintained by EMA.
@@ -264,7 +264,7 @@ AiRoutingExperiment::ReceivePacket (Ptr<Socket> socket)
   Address     sender;
   while ((pkt = socket->RecvFrom (sender)))
     {
-      TimestampTag tag;
+      AiTimestampTag tag;
       if (pkt->PeekPacketTag (tag))
         {
           double d = (Simulator::Now () - tag.GetSendTime ()).GetSeconds ();
@@ -304,7 +304,7 @@ AiRoutingExperiment::EstimateHops (Ptr<Node> src, Ipv4Address dst) const
                 m_nodes.Get (i)->GetObject<MobilityModel> ();
               if (dstMob)
                 {
-                  double   d    = srcMob->GetDistanceTo (dstMob);
+                  double   d    = srcMob->GetDistanceFrom (dstMob);
                   uint16_t hops = static_cast<uint16_t> (std::ceil (d / TX_RANGE));
                   return std::max<uint16_t> (1u, hops);
                 }
