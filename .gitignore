@@ -1,0 +1,18 @@
+# NS-3 Build Directories & Artifacts
+**/build/
+**/cmake-cache/
+**/.lock-ns3*
+
+# Output & Log Files
+*.csv
+!ns-3.48/scratch/manet100.csv
+*.mob
+*.log
+*.tr
+*.pcap
+
+# OS & IDE Files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
