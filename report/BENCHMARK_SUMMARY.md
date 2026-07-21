@@ -13,6 +13,8 @@ This document aggregates empirical benchmark measurements comparing **Baseline A
 | **Network Lifespan (First Node Death @ 5%)** | 199.0 s | 199.0 s | 199.0 s | Higher is better (200.0 s) |
 | **Total Energy Consumed** | N/A (no energy model) | 0.00 J (WARMUP phase) | 0.00 J (WARMUP phase) | Lower is better |
 
+![PDR Metric Comparison](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/report/figures/pdr_comparison.png)
+
 ---
 
 ## 2. Parameter Sensitivity & Timeout Impact
@@ -21,6 +23,8 @@ This document aggregates empirical benchmark measurements comparing **Baseline A
 |---|---|---|---|
 | **1.5 seconds** | 0.226 (22.6%) | High RREQ Broadcast Flooding | High Node Mobility (drones, vehicles) |
 | **3.0 seconds (Default)** | **0.699 (69.9%)** | Balanced Route Rediscovery | Moderate Mobility & Static Baselines |
+
+![Timeout Parameter Sensitivity](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/report/figures/timeout_sensitivity.png)
 
 ---
 

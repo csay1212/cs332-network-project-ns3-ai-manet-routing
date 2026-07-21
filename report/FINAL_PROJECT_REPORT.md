@@ -59,6 +59,12 @@ Tests were conducted across 50 WiFi nodes over a 200-second simulation timeline 
 | **Network Lifespan (First Node Death @ 5%)** | 199.0 s | 199.0 s | 199.0 s | Higher (200s) |
 | **Total Energy Consumed** | N/A (no energy model) | 0.00 J (warmup) | 0.00 J (warmup) | Lower |
 
+#### Visual Metric Breakdown
+![Packet Delivery Ratio Comparison](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/report/figures/pdr_comparison.png)
+
+#### Throughput Time-Series Analysis (0–200s)
+![Throughput Time Series Breakdown](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/report/figures/throughput_timeseries.png)
+
 ---
 
 ## 4. Parameter Sensitivity & Timeout Impact Analysis
@@ -67,11 +73,7 @@ Tests were conducted across 50 WiFi nodes over a 200-second simulation timeline 
 
 When `aiRouteTimeout` was increased from `1.5s` to `3.0s`, **AI-AODV PDR increased by +209%** (from `22.6%` to `69.9%`).
 
-```text
-  PDR under Timeout 1.5s : [#######                       ] 0.226
-  PDR under Timeout 3.0s : [########################      ] 0.699
-  Baseline AODV          : [##############################] 0.872
-```
+![Route Timeout Parameter Sensitivity](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/report/figures/timeout_sensitivity.png)
 
 ### 4.2 Control Overhead Explanation
 
