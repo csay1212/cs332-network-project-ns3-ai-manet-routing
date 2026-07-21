@@ -62,6 +62,12 @@ Tests were conducted across 50 WiFi nodes over a 200-second simulation timeline 
 #### Visual Metric Breakdown
 ![Packet Delivery Ratio Comparison](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/report/figures/pdr_comparison.png)
 
+> [!TIP]
+> **Beginner Guide: Understanding the Percentage Numbers**
+> - **87.2% Packet Delivery Ratio (PDR)** means that out of every **100 messages sent** by nodes in the network, **87 successfully arrived** at their destination.
+> - **Why Baseline Standard AODV scored 87.2%**: In this test, all 50 network nodes stayed completely stationary. Because no paths broke, standard AODV found one route at $t=100\text{s}$ and reused it forever with zero extra maintenance.
+> - **Why AI-AODV is tuned for mobility**: AI-AODV constantly calculates battery levels and path instability. In moving/drone networks, this prevents connection drops when nodes move away or die.
+
 #### Throughput Time-Series Analysis (0–200s)
 ![Throughput Time Series Breakdown](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/report/figures/throughput_timeseries.png)
 
@@ -74,6 +80,11 @@ Tests were conducted across 50 WiFi nodes over a 200-second simulation timeline 
 When `aiRouteTimeout` was increased from `1.5s` to `3.0s`, **AI-AODV PDR increased by +209%** (from `22.6%` to `69.9%`).
 
 ![Route Timeout Parameter Sensitivity](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/report/figures/timeout_sensitivity.png)
+
+> [!NOTE]
+> **Beginner Guide: What does the +209% Gain mean?**
+> - At **1.5s refresh**, the system searched for new routes too aggressively, creating a "digital traffic jam" of search packets that dropped delivery to **22.6%**.
+> - At **3.0s refresh**, the traffic jam vanished, delivering **3x more messages (69.9% PDR)** — a **+209% relative improvement**!
 
 ### 4.2 Control Overhead Explanation
 
