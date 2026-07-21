@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """
 analyze-results.py
 ==================
@@ -62,11 +62,16 @@ def pdr_baseline(rows, pps=4, sim_time=200, n_sinks=10, warmup=100):
 
 def pdr_ai(rows):
     """PDR from AI CSV using PktsSent column (estimated at source)."""
-    total_rx = sum(int(r["PktsRcvd"]) for r in rows if r["PktsRcvd"])
-    # PktsSent is constant across rows (cumulative estimate at setup)
-    total_tx_vals = [int(r["PktsSent"]) for r in rows if r["PktsSent"] and int(r["PktsSent"]) > 0]
-    total_tx = max(total_tx_vals) if total_tx_vals else 0
-    return (total_rx / total_tx) if total_tx > 0 else 0.0
+    if not rows:
+        return 0.0
+    if "PktsRcvd" in rows[0]:
+        total_rx = sum(int(r["PktsRcvd"]) for r in rows if r.get("PktsRcvd"))
+        total_tx_vals = [int(r["PktsSent"]) for r in rows if r.get("PktsSent") and int(r["PktsSent"]) > 0]
+        total_tx = max(total_tx_vals) if total_tx_vals else 0
+        return (total_rx / total_tx) if total_tx > 0 else 0.0
+    elif "PacketsReceived" in rows[0]:
+        return pdr_baseline(rows)
+    return 0.0
 
 
 def avg_delay_ms(rows):
