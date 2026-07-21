@@ -150,19 +150,4 @@ python3 scratch/analyze-results.py baseline-aodv-seed42.csv ai-aodv-seed42.csv
 
 ---
 
-## 7. Self-Verification Audit Checklist
-
-Use this checklist to verify that all system components and report deliverables are complete:
-
-- [x] **Report Directory Created**: `report/` folder initialized.
-- [x] **Comprehensive Final Report**: `report/FINAL_PROJECT_REPORT.md` written and validated.
-- [x] **Benchmark Summary Created**: `report/BENCHMARK_SUMMARY.md` formatted with metric tables.
-- [x] **Mathematical Equations Documented**: Cost function ($w_1, w_2, w_3$) and EMA ($\alpha = 0.2$) defined.
-- [x] **Parameter Sensitivity Analyzed**: `aiRouteTimeout=1.5s` vs `3.0s` impact (+209% PDR gain) documented.
-- [x] **Academic Trade-Off Evaluated**: Static vs dynamic/mobile topology performance explained.
-- [x] **Multi-Platform Support Included**: Commands provided for macOS, Linux, and Windows.
-- [x] **Git Repository Synchronized**: Pushed to GitHub ([cs332-network-project-ns3-ai-manet-routing](https://github.com/csay1212/cs332-network-project-ns3-ai-manet-routing)).
-
----
-
 *Report prepared for CS332 Mobile Ad-Hoc Network Routing Optimization Project.*
