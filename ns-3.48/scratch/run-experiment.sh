@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env bash
+#!/usr/bin/env bash
 # run-experiment.sh -- Run baseline AODV and AI-AODV side-by-side.
 # Usage:  bash scratch/run-experiment.sh [--seed 42] [--simTime 200]
 #

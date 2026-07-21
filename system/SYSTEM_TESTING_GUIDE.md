@@ -1,55 +1,61 @@
-# System Testing & Command Reference
+# Multi-Platform Quick Testing Cheatsheet
 
-Quick command cheatsheet for running and testing the **AI-Enhanced MANET Routing System** in `ns-3.48/ns-3.48/`.
+Quick command reference for running the **AI-Enhanced MANET Routing Experiment** on **macOS**, **Linux**, and **Windows**.
 
 ---
 
-## Quick Start (One-Command Test)
+## 1. Prerequisites Setup
 
-From `ns-3.48/ns-3.48/`:
+### 🍏 macOS (Apple Silicon / Intel)
+```bash
+brew install cmake ninja gcc python3 git
+```
+
+### 🐧 Linux (Ubuntu / Debian)
+```bash
+sudo apt update && sudo apt install -y build-essential cmake ninja-build g++ python3 git
+```
+
+### 🪟 Windows (MSYS2)
+```powershell
+winget install MSYS2.MSYS2
+C:\msys64\usr\bin\bash.exe -l -c "pacman -Sy --noconfirm mingw-w64-x86_64-gcc mingw-w64-x86_64-cmake mingw-w64-x86_64-ninja mingw-w64-x86_64-python"
+```
+
+---
+
+## 2. One-Shot Test Command
 
 ```bash
+git clone https://github.com/csay1212/cs332-network-project-ns3-ai-manet-routing.git
+cd cs332-network-project-ns3-ai-manet-routing/ns-3.48
+
+# Run automated build, execution, and analysis
 bash scratch/run-experiment.sh --seed 42 --simTime 200
 ```
 
 ---
 
-## Step-by-Step Command Guide
+## 3. Step-by-Step Commands
 
-### 1. Build Binaries
 ```bash
-./ns3 build scratch/compare
-./ns3 build scratch/ai-routing
-```
+# 1. Configure
+python3 ns3 configure --enable-examples
 
-### 2. Run Baseline AODV
-```bash
-./ns3 run "compare --protocol=2 --CSVfileName=baseline-aodv.csv --seed=42 --simTime=200"
-```
+# 2. Build
+python3 ns3 build scratch/compare
+python3 ns3 build scratch/ai-routing
 
-### 3. Run AI-AODV
-```bash
-./ns3 run "ai-routing --nNodes=50 --nSinks=10 --simTime=200 --seed=42 --w1=0.4 --w2=0.4 --w3=0.2 --aiRouteTimeout=1.5 --CSVfileName=ai-aodv.csv"
-```
+# 3. Run Baseline
+python3 ns3 run "compare --protocol=2 --CSVfileName=baseline-aodv-seed42.csv --seed=42 --simTime=200"
 
-### 4. Analyze & Compare Metrics
-```bash
-python3 scratch/analyze-results.py baseline-aodv.csv ai-aodv.csv
+# 4. Run AI-AODV
+python3 ns3 run "ai-routing --nNodes=50 --nSinks=10 --simTime=200 --seed=42 --w1=0.4 --w2=0.4 --w3=0.2 --aiRouteTimeout=1.5 --CSVfileName=ai-aodv-seed42.csv"
+
+# 5. Analyze Results
+python3 scratch/analyze-results.py baseline-aodv-seed42.csv ai-aodv-seed42.csv
 ```
 
 ---
 
-## Customizing AI Weights
-
-- **Hop Ratio Focus**: `w1=0.6, w2=0.2, w3=0.2`
-- **Energy Focus**: `w1=0.2, w2=0.6, w3=0.2`
-- **Reliability Focus**: `w1=0.2, w2=0.2, w3=0.6`
-
-Command example:
-```bash
-./ns3 run "ai-routing --w1=0.2 --w2=0.6 --w3=0.2 --CSVfileName=ai-energy-focused.csv"
-```
-
----
-
-For full architecture details, mathematical formulas, and CSV schemas, see [system/README.md](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/system/README.md).
+For complete architecture details, see [system/README.md](file:///c:/Users/saych/uni/Year4/Semester%202/CS332/Project/ns-3.48/system/README.md).
