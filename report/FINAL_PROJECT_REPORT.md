@@ -92,15 +92,58 @@ Setting `aiRouteTimeout` too low ($1.5\text{s}$) in static networks forces frequ
 
 ---
 
-## 5. Static vs. Dynamic Topology Academic Trade-Off Analysis
+## 5. Why Use AI-AODV Instead of Traditional AODV? (Comparative Analysis & Value Proposition)
 
-### 5.1 Why Baseline AODV Excels in Static Topologies
+### 5.1 The Core Problem with Traditional AODV ("Blind Routing")
+Traditional AODV is a **single-metric, reactive** protocol. It selects routing paths based **only on minimum hop count**. 
+
+#### Limitations of Traditional AODV:
+1. **Blind to Battery Depletion**: Traditional AODV will route 100% of network traffic through a node even if its battery is at 1%, causing the node to die and collapsing the entire network path.
+2. **Blind to Wireless Interference & Noise**: It treats a noisy link with 50% packet loss the same as a perfect link, as long as the hop count is identical.
+3. **Reactive Connection Drops**: When a node moves out of range, traditional AODV continues attempting transmission until a hard timeout occurs, causing severe packet loss spikes.
+
+---
+
+### 5.2 How AI-AODV Solves These Limitations
+
+AI-AODV transforms routing from **blind & reactive** to **predictive & multi-metric**:
+
+```text
+=================================================================================================
+  Feature / Capability          | Traditional AODV              | AI-Enhanced AODV (AI-AODV)
+=================================================================================================
+  Routing Metrics               | Single Metric (Hop Count)     | Multi-Metric (Hop + Energy + Link Quality)
+  Energy Awareness              | ❌ None (Drains bottleneck)   | ✅ Proactive (Reroutes around weak batteries)
+  Link Stability Tracking       | ❌ None (Suffers link drops)  | ✅ EMA Failure Scoring (α = 0.2)
+  Route Maintenance             | Reactive (After path breaks)  | Predictive (Reroutes before path collapse)
+  Ideal Deployment              | Fixed Office / Wired-like     | Drones, Vehicles, Tactical & Emergency
+=================================================================================================
+```
+
+---
+
+### 5.3 Key Advantages: Why AI-AODV is Superior in Real-World Deployment
+
+1. **Energy Longevity & Fair Power Load Balancing**:
+   - Rather than overwhelming a single shortest-path node until its battery dies, AI-AODV penalizes low-battery nodes ($w_2 = 0.4$) and distributes traffic across alternative surviving nodes, extending overall network lifespan.
+
+2. **Proactive Link Failover**:
+   - By tracking historical packet drop rates via Exponential Moving Average (EMA), AI-AODV detects deteriorating links **before** they disconnect completely, seamlessly steering data flows to stable neighboring nodes.
+
+3. **Dynamic Topology Resilience**:
+   - In tactical, military, vehicle (VANET), or drone (UAV) networks where nodes constantly move, AI-AODV's adaptive scoring ($w_3 = 0.2$) prevents catastrophic throughput drops.
+
+---
+
+## 6. Static vs. Dynamic Topology Academic Trade-Off Analysis
+
+### 6.1 Why Baseline AODV Excels in Static Topologies
 
 In static environments (nodes fixed in place, zero mobility):
 - Routes discovered at $t=100\text{s}$ remain valid indefinitely.
 - Baseline AODV incurs **0% route maintenance overhead**, maximizing throughput ($PDR = 87.2\%$).
 
-### 5.2 Why AI-AODV Excels in Dynamic/Mobile Topologies
+### 6.2 Why AI-AODV Excels in Dynamic/Mobile Topologies
 
 In mobile environments (drones, vehicles, dynamic movement):
 - Baseline AODV continues sending traffic to out-of-range nodes until timeout, dropping packets.
